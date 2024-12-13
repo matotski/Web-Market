@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Главная страница - Товары</title>
+    <link rel="stylesheet" href="{% static 'css/products/products.css' %}">
+    <script src="{% static 'js/scripts.js' %}" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Список товаров</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Главная</a></li>
+                <li><a href="#">Категории</a></li>
+                <li><a href="#">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="product-container">
+        {% for product in products %}
+            <div class="product">
+                <div class="product__img">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                </div>
+                <div class="product__content">
+                    <h2>{{ product.name }}</h2>
+                    <p><strong>Описание:</strong> {{ product.description }}</p>
+                    <p><strong>Цена:</strong> {{ product.price }} ₽</p>
+                    <p><strong>Количество:</strong> {{ product.quantity }}</p>
+                    <p><strong>Категория:</strong> {{ product.category }}</p>
+                </div>
+            </div>
+        {% empty %}
+            <p>Товары не найдены.</p>
+        {% endfor %}
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Мой магазин. Все права защищены.</p>
+    </footer>
+</body>
+</html>
