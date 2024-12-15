@@ -23,7 +23,7 @@
                                 <a href="{% url 'products' %}">Каталог</a>
                             </li>
                             <li class="header__item">
-                                <a href="#">Войти</a>
+                                <a href="{% url 'login' %}">Войти</a>
                             </li>
                             {% if user.is_superuser %}
                             <li class="header__item">
