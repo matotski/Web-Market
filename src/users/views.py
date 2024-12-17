@@ -1,7 +1,9 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth, messages
 from django.urls import reverse
-from .forms import UserRegistrationForm, UserLoginForm
+from .forms import UserRegistrationForm, UserLoginForm, UserProfileForm
+from products.models import Basket
 
 
 def register(request):
@@ -44,3 +46,34 @@ def login(request):
         'messages': user_messages,
     }
     return render(request, 'users/login.html', context=context)
+
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        form = UserProfileForm(instance=request.user, data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('profile'))
+        else:
+            print(form.errors)
+    else:
+        form = UserProfileForm(instance=request.user)
+
+    baskets = Basket.objects.filter(user=request.user)
+
+    # Исправлено: вызываем метод basket.sum()
+    total_sum = sum(basket.sum() for basket in baskets)
+    total_quantity = sum(basket.quantity for basket in baskets)
+
+    context = {
+        'form': form,
+        'baskets': baskets,
+        'total_sum': total_sum,
+        'total_quantity': total_quantity,
+    }
+    return render(request, 'users/profile.html', context=context)
+
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect(reverse('main'))

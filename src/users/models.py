@@ -8,7 +8,7 @@ class User(AbstractUser):
     email = models.EmailField()
     password = models.CharField(max_length=200)
     image = models.ImageField(
-        upload_to="users_image", default="users_image/avatar.png", blank=True
+        upload_to="static/vendor/media/users", default="static/vendor/media/users/default.svg", blank=True
     )
 
     def str(self):
