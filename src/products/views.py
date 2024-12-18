@@ -2,13 +2,14 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .models import Product, Basket, Category
+from django.core.paginator import Paginator
 from django.urls import reverse
 
 
 def main(request):
     return render(request, 'products/main.html')
 
-def products(request):
+def products(request, page_number=1):
     search_query = request.GET.get('search', '')
     category_id = request.GET.get('category', '')
     sort_by = request.GET.get('sort', '')
@@ -30,10 +31,14 @@ def products(request):
     elif sort_by == 'name_desc':
         products = products.order_by('-name')
 
+    per_page = 3
+    paginator = Paginator(products, per_page)
+    products_paginator = paginator.page(page_number)
+
     categories = Category.objects.all()
 
     context = {
-        'products': products,
+        'products': products_paginator,
         'categories': categories,
         'request': request,
     }
