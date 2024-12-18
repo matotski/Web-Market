@@ -37,6 +37,11 @@ nav ul li a {
     justify-content: space-around;
 }
 
+.product__url{
+    text-decoration: none;
+    color: #000;
+}
+
 .product {
     background: white;
     border: 1px solid #ddd;

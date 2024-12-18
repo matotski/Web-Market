@@ -11,5 +11,5 @@ class User(AbstractUser):
         upload_to="static/vendor/media/users", default="static/vendor/media/users/default.svg", blank=True
     )
 
-    def str(self):
+    def __str__(self):
         return f"{self.first_name} {self.last_name}"
