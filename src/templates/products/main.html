@@ -1,0 +1,64 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'vendor/css/products/main.css' %}">
+    <title>Web Market</title>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header__wrap">
+                <div class="header__logo">
+                    <a href="{% url 'main' %}">Web Market</a>
+                </div>
+                <div class="header__box">
+                    <nav class="header__nav">
+                        <ul class="header__menu">
+                            <li class="header__item">
+                                <a href="{% url 'products' %}">Каталог</a>
+                            </li>
+                            {% if user.is_authenticated %}
+                                <li class="header__item">
+                                    <a href="{% url 'profile' %}">Профиль</a>
+                                </li>
+                                <li class="header__item"><a href="{% url 'order_list' %}">Заказы</a></li>
+                                {% if user.is_superuser or user.is_staff %}
+                                <li class="header__item"><a href="admin/">Админ-панель</a></li>
+                                {% endif %}
+                                <li class="header__item">
+                                    <a href="{% url 'logout' %}">
+                                        Выйти
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="header__item">
+                                    <a href="{% url 'login' %}">Войти </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                    <div class="header__btn">
+                        <a href="#" class="header__cart btn">Корзина</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+<section class="main">
+    <div class="container">
+        <div class="main-wrap">
+            <div class="main__content">
+                <img src="{% static 'vendor/media/logo.svg' %}" alt="logo">
+                <h1>The best sales in your life</h1>
+                <button class="main__button btn" onclick="location.href='{% url 'products' %}'">Get started</button>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

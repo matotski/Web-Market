@@ -1,0 +1,109 @@
+.orders-container,
+.order-container,
+.success-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.order-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.order-form .form-group {
+    margin-bottom: 20px;
+}
+
+.order-form label {
+    font-weight: bold;
+    color: #555;
+}
+
+.order-form input,
+.order-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.order-form button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.order-form button:hover {
+    background-color: #218838;
+}
+
+.order-item {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.order-item h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.order-item p {
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.order-item ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.order-item ul li {
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.success-container {
+    text-align: center;
+}
+
+.success-container h1 {
+    color: #28a745;
+}
+
+.success-container a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+.success-container a:hover {
+    background-color: #0056b3;
+}
