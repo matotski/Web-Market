@@ -32,7 +32,12 @@
                 <p><strong>Цена:</strong> {{ product.price }} ₽</p>
                 <p><strong>Количество:</strong> {{ product.quantity }}</p>
                 <p><strong>Категория:</strong> {{ product.category }}</p>
-                <a href="{% url 'basket_add' product.id %}" class="btn btn-add-to-cart">Добавить в корзину</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'basket_add' product.id %}" class="btn btn-add-to-cart">Добавить в корзину</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-add-to-cart">Добавить в корзину</a>
+                {% endif %}
+
             </div>
         </div>
     </div>

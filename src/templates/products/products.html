@@ -16,7 +16,11 @@
             <ul>
                 <li><a href="{% url 'main' %}">Главная</a></li>
                 <li><a href="#">Категории</a></li>
-                <li><a href="{% url 'profile' %}">Профиль</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'profile' %}">Профиль</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Войти</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>
@@ -69,7 +73,11 @@
                         <p><strong>Цена:</strong> {{ product.price }} ₽</p>
                         <p><strong>Количество:</strong> {{ product.quantity }}</p>
                         <p><strong>Категория:</strong> {{ product.category }}</p>
-                        <a href="{% url 'basket_add' product.id %}">Добавить в корзину</a>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'basket_add' product.id %}" class="btn btn-add-to-cart">Добавить в корзину</a>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="btn btn-add-to-cart">Добавить в корзину</a>
+                        {% endif %}
                     </div>
                 </a>
             </div>
@@ -79,60 +87,60 @@
     </div>
 
     <ul class="pagination pagination--centered">
-    <!-- Предыдущая страница -->
-    <li class="pagination__item {% if not products.has_previous %} pagination__item--disabled {% endif %}">
-        <a class="pagination__link"
-           href="{% if products.has_previous %} {% url 'paginator' products.previous_page_number %} {% else %} # {% endif %}"
-           tabindex="-1" aria-disabled="true">
-            Предыдущая
-        </a>
-    </li>
+        <!-- Предыдущая страница -->
+        <li class="pagination__item {% if not products.has_previous %} pagination__item--disabled {% endif %}">
+            <a class="pagination__link"
+               href="{% if products.has_previous %} {% url 'paginator' products.previous_page_number %} {% else %} # {% endif %}"
+               tabindex="-1" aria-disabled="true">
+                Предыдущая
+            </a>
+        </li>
 
-    <!-- Динамическое отображение страниц -->
-    {% for page_item in products.paginator.page_range %}
-        {% if page_item == products.number %}
-            <!-- Текущая страница -->
-            <li class="pagination__item pagination__item--active" aria-current="page">
-                <a class="pagination__link" href="#">{{ page_item }}</a>
-            </li>
-        {% elif page_item >= products.number|add:-2 and page_item <= products.number|add:2 %}
-            <!-- Соседние страницы (2 слева и 2 справа) -->
-            <li class="pagination__item">
-                <a class="pagination__link" href="{% url 'paginator' page_item %}">{{ page_item }}</a>
-            </li>
-        {% elif page_item == 1 %}
-            <!-- Первая страница -->
-            <li class="pagination__item">
-                <a class="pagination__link" href="{% url 'paginator' page_item %}">{{ page_item }}</a>
-            </li>
-            {% if products.number > 4 %}
-                <!-- Разделитель "..." -->
-                <li class="pagination__item pagination__item--disabled">
-                    <span class="pagination__link">...</span>
+        <!-- Динамическое отображение страниц -->
+        {% for page_item in products.paginator.page_range %}
+            {% if page_item == products.number %}
+                <!-- Текущая страница -->
+                <li class="pagination__item pagination__item--active" aria-current="page">
+                    <a class="pagination__link" href="#">{{ page_item }}</a>
                 </li>
-            {% endif %}
-        {% elif page_item == products.paginator.num_pages %}
-            <!-- Последняя страница -->
-            <li class="pagination__item">
-                <a class="pagination__link" href="{% url 'paginator' page_item %}">{{ page_item }}</a>
-            </li>
-            {% if products.number < products.paginator.num_pages|add:-3 %}
-                <!-- Разделитель "..." -->
-                <li class="pagination__item pagination__item--disabled">
-                    <span class="pagination__link">...</span>
+            {% elif page_item >= products.number|add:-2 and page_item <= products.number|add:2 %}
+                <!-- Соседние страницы (2 слева и 2 справа) -->
+                <li class="pagination__item">
+                    <a class="pagination__link" href="{% url 'paginator' page_item %}">{{ page_item }}</a>
                 </li>
+            {% elif page_item == 1 %}
+                <!-- Первая страница -->
+                <li class="pagination__item">
+                    <a class="pagination__link" href="{% url 'paginator' page_item %}">{{ page_item }}</a>
+                </li>
+                {% if products.number > 4 %}
+                    <!-- Разделитель "..." -->
+                    <li class="pagination__item pagination__item--disabled">
+                        <span class="pagination__link">...</span>
+                    </li>
+                {% endif %}
+            {% elif page_item == products.paginator.num_pages %}
+                <!-- Последняя страница -->
+                <li class="pagination__item">
+                    <a class="pagination__link" href="{% url 'paginator' page_item %}">{{ page_item }}</a>
+                </li>
+                {% if products.number < products.paginator.num_pages|add:-3 %}
+                    <!-- Разделитель "..." -->
+                    <li class="pagination__item pagination__item--disabled">
+                        <span class="pagination__link">...</span>
+                    </li>
+                {% endif %}
             {% endif %}
-        {% endif %}
-    {% endfor %}
+        {% endfor %}
 
-    <!-- Следующая страница -->
-    <li class="pagination__item {% if not products.has_next %} pagination__item--disabled {% endif %}">
-        <a class="pagination__link"
-           href="{% if products.has_next %} {% url 'paginator' products.next_page_number %} {% else %} # {% endif %}">
-            Следующая
-        </a>
-    </li>
-</ul>
+        <!-- Следующая страница -->
+        <li class="pagination__item {% if not products.has_next %} pagination__item--disabled {% endif %}">
+            <a class="pagination__link"
+               href="{% if products.has_next %} {% url 'paginator' products.next_page_number %} {% else %} # {% endif %}">
+                Следующая
+            </a>
+        </li>
+    </ul>
 
     <footer>
         <p>&copy; 2024 Мой магазин. Все права защищены.</p>

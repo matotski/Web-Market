@@ -1,0 +1,31 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'vendor/css/orders/main.css' %}">
+    <title>Ваши заказы</title>
+</head>
+<body>
+    <div class="orders-container">
+        <h1>Ваши заказы</h1>
+        {% for order in orders %}
+        <div class="order-item">
+            <h3>Заказ №{{ order.id }}</h3>
+            <p>Статус: {{ order.get_status_display }}</p>
+            <p>Адрес доставки: {{ order.delivery_address }}</p>
+            <p>Общая стоимость: {{ order.total_price }} руб.</p>
+            <ul>
+                {% for item in order.order_items.all %}
+                <li>{{ item.product.name }} x {{ item.quantity }} - {{ item.price }} руб.</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% empty %}
+        <p>У вас пока нет заказов.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
