@@ -21,24 +21,58 @@
         </nav>
     </header>
 
+    <div class="filters">
+        <!-- Форма для поиска -->
+        <form method="GET" action="{% url 'products' %}" class="search-form">
+            <input type="text" name="search" placeholder="Поиск по товарам..." value="{{ request.GET.search }}">
+            <button type="submit">Поиск</button>
+        </form>
+
+        <!-- Фильтр по категориям -->
+        <form method="GET" action="{% url 'products' %}" class="category-filter">
+            <label for="category">Фильтр по категориям:</label>
+            <select name="category" id="category">
+                <option value="">Все категории</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}">
+                        {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit">Применить</button>
+        </form>
+
+        <!-- Сортировка -->
+        <form method="GET" action="{% url 'products' %}" class="sort-form">
+            <label for="sort">Сортировать по:</label>
+            <select name="sort" id="sort">
+                <option value="">Без сортировки</option>
+                <option value="price_asc" {% if request.GET.sort == 'price_asc' %}selected{% endif %}>Цена (от дешевых к дорогим)</option>
+                <option value="price_desc" {% if request.GET.sort == 'price_desc' %}selected{% endif %}>Цена (от дорогих к дешевым)</option>
+                <option value="name_asc" {% if request.GET.sort == 'name_asc' %}selected{% endif %}>Имя (А-Я)</option>
+                <option value="name_desc" {% if request.GET.sort == 'name_desc' %}selected{% endif %}>Имя (Я-А)</option>
+            </select>
+            <button type="submit">Сортировать</button>
+        </form>
+    </div>
+
     <div class="product-container">
         {% for product in products %}
-        <a href="{% url 'product_detail' product.id %}" class="product__url">
             <div class="product">
-                <div class="product__img">
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                </div>
-                <div class="product__content">
-                    <h2>{{ product.name }}</h2>
-                    <p><strong>Описание:</strong> {{ product.description }}</p>
-                    <p><strong>Цена:</strong> {{ product.price }} ₽</p>
-                    <p><strong>Количество:</strong> {{ product.quantity }}</p>
-                    <p><strong>Категория:</strong> {{ product.category }}</p>
-                    <a href="{% url 'basket_add' product.id %}">Добавить в корзину</a>
-                </div>
+                <a href="{% url 'product_detail' product.id %}" class="product__url">
+                    <div class="product__img">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    </div>
+                    <div class="product__content">
+                        <h2>{{ product.name }}</h2>
+                        <p><strong>Описание:</strong> {{ product.description }}</p>
+                        <p><strong>Цена:</strong> {{ product.price }} ₽</p>
+                        <p><strong>Количество:</strong> {{ product.quantity }}</p>
+                        <p><strong>Категория:</strong> {{ product.category }}</p>
+                        <a href="{% url 'basket_add' product.id %}">Добавить в корзину</a>
+                    </div>
+                </a>
             </div>
-        </a>
-
         {% empty %}
             <p>Товары не найдены.</p>
         {% endfor %}
