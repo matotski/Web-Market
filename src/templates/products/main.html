@@ -22,35 +22,24 @@
                             <li class="header__item">
                                 <a href="{% url 'products' %}">Каталог</a>
                             </li>
-                {% if user.is_authenticated %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-user-circle"></i>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li>
-                            <a class="dropdown-item" href="{% url 'profile' %}">Профиль</a>
-                        </li>
-                        <li><a class="dropdown-item" href="orders/orders.html">Заказы</a></li>
-                        {% if user.is_superuser or user.is_staff %}
-                        <li><a class="dropdown-item" href="admin/">Админ-панель</a></li>
-                        {% endif %}
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{% url 'logout' %}">
-                                Выйти
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Войти <i class="fas fa-sign-in-alt"></i></a>
-                </li>
-                {% endif %}
+                            {% if user.is_authenticated %}
+                                <li class="header__item">
+                                    <a href="{% url 'profile' %}">Профиль</a>
+                                </li>
+                                <li class="header__item"><a href="{% url 'order_list' %}">Заказы</a></li>
+                                {% if user.is_superuser or user.is_staff %}
+                                <li class="header__item"><a href="admin/">Админ-панель</a></li>
+                                {% endif %}
+                                <li class="header__item">
+                                    <a href="{% url 'logout' %}">
+                                        Выйти
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="header__item">
+                                    <a href="{% url 'login' %}">Войти </a>
+                                </li>
+                            {% endif %}
                         </ul>
                     </nav>
                     <div class="header__btn">
@@ -60,18 +49,16 @@
             </div>
         </div>
     </header>
-     <section class="main">
-      <div class="container">
+<section class="main">
+    <div class="container">
         <div class="main-wrap">
-          <div class="main__content">
-            <img src="{% static 'vendor/media/logo.svg' %}" alt="logo">
-            <h1>
-              The best sales in your life
-            </h1>
-            <button class="main__button btn" onclick="location.href='{% url 'products' %}'">Get started</button>
-          </div>
+            <div class="main__content">
+                <img src="{% static 'vendor/media/logo.svg' %}" alt="logo">
+                <h1>The best sales in your life</h1>
+                <button class="main__button btn" onclick="location.href='{% url 'products' %}'">Get started</button>
+            </div>
         </div>
-      </div>
-    </section>
+    </div>
+</section>
 </body>
 </html>
