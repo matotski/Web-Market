@@ -5,7 +5,7 @@ class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
     description = models.TextField(null=True, blank=True)
 
-    def str(self):
+    def __str__(self):
         return f'{self.name}'
 
 class Product(models.Model):
@@ -16,7 +16,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='static/vendor/media/products_images', default='static/vendor/media/products_images/product.png')
     category = models.ForeignKey(to=Category, on_delete=models.PROTECT)
 
-    def str(self):
+    def __str__(self):
         return f'{self.name} ({self.category}) - {self.price}'
 
 class Basket(models.Model):

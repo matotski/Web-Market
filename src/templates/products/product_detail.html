@@ -1,0 +1,44 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ product.name }}</title>
+    <link rel="stylesheet" href="{% static 'vendor/css/products/product_detail.css' %}">
+    <script src="{% static 'js/scripts.js' %}" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Детальная информация о товаре</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'main' %}">Главная</a></li>
+                <li><a href="#">Категории</a></li>
+                <li><a href="{% url 'profile' %}">Профиль</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="product-detail-container">
+        <div class="product-detail">
+            <div class="product-detail__img">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            </div>
+            <div class="product-detail__content">
+                <h2>{{ product.name }}</h2>
+                <p><strong>Описание:</strong> {{ product.description }}</p>
+                <p><strong>Цена:</strong> {{ product.price }} ₽</p>
+                <p><strong>Количество:</strong> {{ product.quantity }}</p>
+                <p><strong>Категория:</strong> {{ product.category }}</p>
+                <a href="{% url 'basket_add' product.id %}" class="btn btn-add-to-cart">Добавить в корзину</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Мой магазин. Все права защищены.</p>
+    </footer>
+</body>
+</html>
